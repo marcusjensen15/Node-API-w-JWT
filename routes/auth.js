@@ -11,6 +11,10 @@ const schema = {
   password: Joi.string().min(6).required()
 };
 
+// Validating data before we create a user
+
+
+
 
 router.post('/register', async (req,res) => {
   const user = new User({
