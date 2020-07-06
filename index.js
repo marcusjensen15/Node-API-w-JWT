@@ -4,17 +4,19 @@ const port = 3000;
 const mongoose = require('mongoose');
 const apiKey = require('./apiKey');
 
+//Import routes
+
+const authRoute = require('./routes/auth');
+
 //connnect to DB
 
 mongoose.connect(apiKey.creds,
 { useNewUrlParser: true },
 () => console.log('connected to db!'));
-//Import routes
 
-const authRoute = require('./routes/auth');
+//Middleware
 
-
-//Route Middlewares
+app.use(express.json());
 
 
 app.use('/api/user', authRoute);
