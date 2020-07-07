@@ -18,8 +18,8 @@ router.post('/register', async (req,res) => {
 
   // Validating data before we create a user
 
-  const validation = schema.validate(req.body);
-  res.send(validation);
+  const error = schema.validate(req.body);
+  res.send(error.error.details[0].message);
 
   // const user = new User({
   //   name: req.body.name,
