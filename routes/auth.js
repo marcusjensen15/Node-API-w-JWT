@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../model/User');
-const {registerValidation, loginValidation} = require('../validation')
+const {registerValidation, loginValidation} = require('../validation');
+const bcrypt = require('bcryptjs')
 
 router.post('/register', async (req,res) => {
 
@@ -14,12 +15,17 @@ router.post('/register', async (req,res) => {
   const emailExists = await User.findOne({email: req.body.email});
   if(emailExists) return res.status(400).send('this email already exists');
 
+  //Hash passwords - genSalt is a bcrypt function. 10 is the level of complexity. We then pass the salted password into hash as a parameter.
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(req.body.password, salt);
+
   //Creating new user
 
   const user = new User({
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: hashPassword,
   });
   try{
     const savedUser = await user.save();
