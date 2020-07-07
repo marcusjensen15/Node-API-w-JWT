@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const User = require('../model/User');
 const {registerValidation, loginValidation} = require('../validation');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const tokenSecret = require('../tokenSecret');
 
 router.post('/register', async (req,res) => {
 
@@ -50,6 +52,11 @@ router.post('/login', async (req,res) => {
     //Checking if password is correct - using bcrypt's compare function.
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if(!validPass) return res.status(400).send('Invalid Password');
+
+    //Create and assign a token. Sign is a method specific to json web token. In Front End you have access to this ID and know your user is logged in. Attaching the token to the response.
+
+    const token = jwt.sign({_id: user._id}, tokenSecret.secret);
+    res.header('auth-token', token).send(token);
 
     res.send('Logged In!');
 
