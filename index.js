@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 const mongoose = require('mongoose');
 const apiKey = require('./apiKey');
-
+const postRoute = require('./routes/posts');
 //Import routes
 
 const authRoute = require('./routes/auth');
@@ -18,7 +18,7 @@ mongoose.connect(apiKey.creds,
 
 app.use(express.json());
 
-
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
 
 app.listen(port, () => console.log('running on port ' + port));
