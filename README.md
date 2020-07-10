@@ -7,3 +7,6 @@ If you want to access posts, you need to do a 'get' request to 'api/posts'. You 
 auth-token (insert auth-token)
 
 If you are confused getting this going, check out the end of this youtube video: https://www.youtube.com/watch?v=2jqok-WgelI
+
+
+This will serve as a great backend to my flashcard app. Will keep frontend in a different repo. Alsoo will need to build out all necessary views.
